@@ -33,6 +33,8 @@
  */
 
 package com.gulshansingh.hackerlivewallpaper.thirdparty;
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -235,6 +237,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param e the element to add
      * @throws NullPointerException if the specified element is null
      */
+    @Override
     public void addFirst(E e) {
         if (e == null)
             throw new NullPointerException();
@@ -251,6 +254,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param e the element to add
      * @throws NullPointerException if the specified element is null
      */
+    @Override
     public void addLast(E e) {
         if (e == null)
             throw new NullPointerException();
@@ -266,6 +270,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return <tt>true</tt> (as specified by {@link Deque#offerFirst})
      * @throws NullPointerException if the specified element is null
      */
+    @Override
     public boolean offerFirst(E e) {
         addFirst(e);
         return true;
@@ -278,6 +283,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return <tt>true</tt> (as specified by {@link Deque#offerLast})
      * @throws NullPointerException if the specified element is null
      */
+    @Override
     public boolean offerLast(E e) {
         addLast(e);
         return true;
@@ -286,6 +292,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     /**
      * @throws NoSuchElementException {@inheritDoc}
      */
+    @Override
     public E removeFirst() {
         E x = pollFirst();
         if (x == null)
@@ -296,6 +303,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     /**
      * @throws NoSuchElementException {@inheritDoc}
      */
+    @Override
     public E removeLast() {
         E x = pollLast();
         if (x == null)
@@ -303,6 +311,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
         return x;
     }
 
+    @Override
     public E pollFirst() {
         int h = head;
         E result = elements[h]; // Element is null if deque empty
@@ -313,6 +322,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
         return result;
     }
 
+    @Override
     public E pollLast() {
         int t = (tail - 1) & (elements.length - 1);
         E result = elements[t];
@@ -326,6 +336,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     /**
      * @throws NoSuchElementException {@inheritDoc}
      */
+    @Override
     public E getFirst() {
         E x = elements[head];
         if (x == null)
@@ -336,6 +347,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     /**
      * @throws NoSuchElementException {@inheritDoc}
      */
+    @Override
     public E getLast() {
         E x = elements[(tail - 1) & (elements.length - 1)];
         if (x == null)
@@ -343,10 +355,12 @@ public class ArrayDeque<E> extends AbstractCollection<E>
         return x;
     }
 
+    @Override
     public E peekFirst() {
         return elements[head]; // elements[head] is null if deque empty
     }
 
+    @Override
     public E peekLast() {
         return elements[(tail - 1) & (elements.length - 1)];
     }
@@ -363,6 +377,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param o element to be removed from this deque, if present
      * @return <tt>true</tt> if the deque contained the specified element
      */
+    @Override
     public boolean removeFirstOccurrence(Object o) {
         if (o == null)
             return false;
@@ -391,6 +406,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param o element to be removed from this deque, if present
      * @return <tt>true</tt> if the deque contained the specified element
      */
+    @Override
     public boolean removeLastOccurrence(Object o) {
         if (o == null)
             return false;
@@ -418,6 +434,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return <tt>true</tt> (as specified by {@link Collection#add})
      * @throws NullPointerException if the specified element is null
      */
+    @Override
     public boolean add(E e) {
         addLast(e);
         return true;
@@ -432,6 +449,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return <tt>true</tt> (as specified by {@link Queue#offer})
      * @throws NullPointerException if the specified element is null
      */
+    @Override
     public boolean offer(E e) {
         return offerLast(e);
     }
@@ -447,6 +465,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return the head of the queue represented by this deque
      * @throws NoSuchElementException {@inheritDoc}
      */
+    @Override
     public E remove() {
         return removeFirst();
     }
@@ -461,6 +480,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return the head of the queue represented by this deque, or
      *         <tt>null</tt> if this deque is empty
      */
+    @Override
     public E poll() {
         return pollFirst();
     }
@@ -475,6 +495,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return the head of the queue represented by this deque
      * @throws NoSuchElementException {@inheritDoc}
      */
+    @Override
     public E element() {
         return getFirst();
     }
@@ -488,6 +509,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @return the head of the queue represented by this deque, or
      *         <tt>null</tt> if this deque is empty
      */
+    @Override
     public E peek() {
         return peekFirst();
     }
@@ -503,6 +525,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param e the element to push
      * @throws NullPointerException if the specified element is null
      */
+    @Override
     public void push(E e) {
         addFirst(e);
     }
@@ -517,6 +540,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *         of the stack represented by this deque)
      * @throws NoSuchElementException {@inheritDoc}
      */
+    @Override
     public E pop() {
         return removeFirst();
     }
@@ -585,6 +609,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *
      * @return the number of elements in this deque
      */
+    @Override
     public int size() {
         return (tail - head) & (elements.length - 1);
     }
@@ -594,6 +619,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *
      * @return <tt>true</tt> if this deque contains no elements
      */
+    @Override
     public boolean isEmpty() {
         return head == tail;
     }
@@ -606,10 +632,12 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *
      * @return an iterator over the elements in this deque
      */
+    @Override
     public Iterator<E> iterator() {
         return new DeqIterator();
     }
 
+    @Override
     public Iterator<E> descendingIterator() {
         return new DescendingIterator();
     }
@@ -704,6 +732,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param o object to be checked for containment in this deque
      * @return <tt>true</tt> if this deque contains the specified element
      */
+    @Override
     public boolean contains(Object o) {
         if (o == null)
             return false;
@@ -731,6 +760,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @param o element to be removed from this deque, if present
      * @return <tt>true</tt> if this deque contained the specified element
      */
+    @Override
     public boolean remove(Object o) {
         return removeFirstOccurrence(o);
     }
@@ -739,6 +769,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * Removes all of the elements from this deque.
      * The deque will be empty after this call returns.
      */
+    @Override
     public void clear() {
         int h = head;
         int t = tail;
@@ -766,6 +797,8 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *
      * @return an array containing all of the elements in this deque
      */
+    @NonNull
+    @Override
     public Object[] toArray() {
         return copyElements(new Object[size()]);
     }
@@ -807,6 +840,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *         this deque
      * @throws NullPointerException if the specified array is null
      */
+    @Override
     public <T> T[] toArray(T[] a) {
         int size = size();
         if (a.length < size)
@@ -825,6 +859,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      *
      * @return a copy of this deque
      */
+    @Override
     public ArrayDeque<E> clone() {
         try {
             ArrayDeque<E> result = (ArrayDeque<E>) super.clone();
@@ -940,7 +975,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
         for (int i = 0; i < size; i++)
             elements[i] = (E)s.readObject();
     }
-    
+
 	public E get(int index) {
 		return elements[(head + index) % elements.length];
 	}
