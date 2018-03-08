@@ -96,31 +96,37 @@ public class CharacterSetPreference extends DialogPreference implements Refresha
     }
 
     private void updateEditText(String characterSetName) {
-        String characterSet;
-        if (characterSetName.equals("Binary")) {
-            characterSet = BINARY_CHAR_SET;
-            editText.setEnabled(false);
-        } else if (characterSetName.equals("Matrix")) {
-            characterSet = MATRIX_CHAR_SET;
-            editText.setEnabled(false);
-        } else if (characterSetName.equals("Custom (random characters)")) {
-            editText.setEnabled(true);
-            characterSet = getSharedPreferences().getString("custom_character_set", "");
-            disablePosButton(characterSet.length() == 0);
-        } else if (characterSetName.equals("Custom (exact text)")) {
-            editText.setEnabled(true);
-            characterSet = getSharedPreferences().getString("custom_character_string", "");
-            disablePosButton(characterSet.length() == 0);
-        } else {
-            if (!characterSetName.equals("Custom")) { // Legacy charset name
-                throw new RuntimeException("Invalid character set " + characterSetName);
-            } else {
-                getSharedPreferences().edit().putString("character_set_name", "Custom (random characters)")
-                        .commit();
+        final String characterSet;
+        switch (characterSetName) {
+            case "Binary":
+                characterSet = BINARY_CHAR_SET;
+                editText.setEnabled(false);
+                break;
+            case "Matrix":
+                characterSet = MATRIX_CHAR_SET;
+                editText.setEnabled(false);
+                break;
+            case "Custom (random characters)":
                 editText.setEnabled(true);
                 characterSet = getSharedPreferences().getString("custom_character_set", "");
                 disablePosButton(characterSet.length() == 0);
-            }
+                break;
+            case "Custom (exact text)":
+                editText.setEnabled(true);
+                characterSet = getSharedPreferences().getString("custom_character_string", "");
+                disablePosButton(characterSet.length() == 0);
+                break;
+            default:
+                if (!characterSetName.equals("Custom")) { // Legacy charset name
+                    throw new RuntimeException("Invalid character set " + characterSetName);
+                } else {
+                    getSharedPreferences().edit().putString("character_set_name", "Custom (random characters)")
+                            .commit();
+                    editText.setEnabled(true);
+                    characterSet = getSharedPreferences().getString("custom_character_set", "");
+                    disablePosButton(characterSet.length() == 0);
+                }
+                break;
         }
 
         editText.setText(characterSet);
