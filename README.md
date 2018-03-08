@@ -1,7 +1,7 @@
 Hacker Live Wallpaper
 =====================
 
-An Android live wallpaper of bit sequences streaming down the screen.
+An Android live wallpaper of character sequences streaming down the screen.
 
 This wallpaper can be downloaded from Google Play [here](https://play.google.com/store/apps/details?id=com.gulshansingh.hackerlivewallpaper).
 
