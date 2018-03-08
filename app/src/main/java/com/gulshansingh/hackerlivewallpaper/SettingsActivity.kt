@@ -83,10 +83,10 @@ class SettingsActivity : PreferenceActivity() {
 
         // We set the color to the color in the preferences to refresh the color preview
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
-        val bitPref = findPreference(KEY_BIT_COLOR) as ColorPickerPreference
-        var defaultColor = resources.getColor(R.color.default_bit_color)
+        val characterPref = findPreference(KEY_BIT_COLOR) as ColorPickerPreference
+        var defaultColor = resources.getColor(R.color.default_character_color)
         var color = sp.getInt(KEY_BIT_COLOR, defaultColor)
-        bitPref.onColorChanged(color)
+        characterPref.onColorChanged(color)
 
         val backgroundPref = findPreference(KEY_BACKGROUND_COLOR) as ColorPickerPreference
         defaultColor = resources
@@ -105,7 +105,7 @@ class SettingsActivity : PreferenceActivity() {
 
     public override fun onStop() {
         super.onStop()
-        BitSequence.configure(this)
+        CharacterSequence.configure(this)
         HackerWallpaperService.reset()
     }
 
@@ -113,10 +113,10 @@ class SettingsActivity : PreferenceActivity() {
         const val KEY_BACKGROUND_COLOR = "background_color"
         const val KEY_ENABLE_DEPTH = "enable_depth"
         const val KEY_TEXT_SIZE = "text_size"
-        const val KEY_CHANGE_BIT_SPEED = "change_bit_speed"
+        const val KEY_CHANGE_BIT_SPEED = "change_character_speed"
         const val KEY_FALLING_SPEED = "falling_speed"
-        const val KEY_NUM_BITS = "num_bits"
-        const val KEY_BIT_COLOR = "bit_color"
+        const val KEY_NUM_BITS = "num_characters"
+        const val KEY_BIT_COLOR = "character_color"
         const val KEY_CHARACTER_SET_PREFS = "character_set_prefs"
 
         /** Keys for preferences that should be refreshed  */

@@ -178,7 +178,7 @@ import java.util.Stack;
  * provide support for indexed access to elements.
  *
  * <p>While <tt>Deque</tt> implementations are not strictly required
- * to prohibit the insertion of null elements, they are strongly
+ * to prohicharacter the insertion of null elements, they are strongly
  * encouraged to do so.  Users of any <tt>Deque</tt> implementations
  * that do allow null elements are strongly encouraged <i>not</i> to
  * take advantage of the ability to insert nulls.  This is so because

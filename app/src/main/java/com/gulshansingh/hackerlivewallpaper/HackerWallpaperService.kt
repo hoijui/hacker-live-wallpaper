@@ -25,7 +25,7 @@ class HackerWallpaperService : WallpaperService() {
         private var visible = true
 
         /** The sequences to draw on the screen  */
-        private val sequences = ArrayList<BitSequence>()
+        private val sequences = ArrayList<CharacterSequence>()
 
         private var width: Int = 0
 
@@ -34,7 +34,7 @@ class HackerWallpaperService : WallpaperService() {
          */
         private val drawRunnable = Runnable { draw() }
 
-        /** Draws all of the bit sequences on the screen  */
+        /** Draws all of the character sequences on the screen  */
         private fun draw() {
             if (visible) {
                 // We can't have just one reset flag, because then the preview
@@ -82,7 +82,7 @@ class HackerWallpaperService : WallpaperService() {
             g = color shr 8 and 0xFF
             b = color shr 0 and 0xFF
             stop()
-            val numSequences = (1.5 * width / BitSequence.width).toInt()
+            val numSequences = (1.5 * width / CharacterSequence.width).toInt()
 
             var start = 0
             if (clearAll) {
@@ -95,8 +95,8 @@ class HackerWallpaperService : WallpaperService() {
                 start = size
             }
             for (i in start until numSequences) {
-                sequences.add(BitSequence(
-                        (i * BitSequence.width / 1.5).toInt()))
+                sequences.add(CharacterSequence(
+                        (i * CharacterSequence.width / 1.5).toInt()))
             }
             start()
         }
@@ -124,7 +124,7 @@ class HackerWallpaperService : WallpaperService() {
 
         override fun onSurfaceCreated(holder: SurfaceHolder) {
             super.onSurfaceCreated(holder)
-            BitSequence.configure(applicationContext)
+            CharacterSequence.configure(applicationContext)
         }
 
         override fun onSurfaceDestroyed(holder: SurfaceHolder) {
@@ -137,9 +137,9 @@ class HackerWallpaperService : WallpaperService() {
             super.onSurfaceChanged(holder, format, width, height)
             this.width = width
 
-            BitSequence.setScreenDim(width, height)
+            CharacterSequence.setScreenDim(width, height)
 
-            // Initialize BitSequences
+            // Initialize CharacterSequences
             resetSequences(false)
         }
 

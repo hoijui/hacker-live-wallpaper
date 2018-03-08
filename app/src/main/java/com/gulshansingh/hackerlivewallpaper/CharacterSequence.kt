@@ -25,30 +25,30 @@ import com.gulshansingh.hackerlivewallpaper.SettingsActivity.Companion.KEY_NUM_B
 import com.gulshansingh.hackerlivewallpaper.SettingsActivity.Companion.KEY_TEXT_SIZE
 
 /**
- * A class that stores a list of bits. The first bit is removed and a new bit is
- * appended at a fixed interval. Calling the draw method of displays the bit
- * sequence vertically on the screen. Every time a bit is changed, the position
+ * A class that stores a list of characters. The first character is removed and a new character is
+ * appended at a fixed interval. Calling the draw method of displays the character
+ * sequence vertically on the screen. Every time a character is changed, the position
  * of the sequence on the screen will be shifted downward. Moving past the
  * bottom of the screen will cause the sequence to be placed above the screen
  *
  * @author Gulshan Singh
  */
-class BitSequence(x: Int) {
+class CharacterSequence(x: Int) {
 
-    /** The bits this sequence stores  */
-    private val bits = ArrayDeque<String>()
+    /** The characters this sequence stores  */
+    private val characters = ArrayDeque<String>()
 
     /** A variable used for all operations needing random numbers  */
     private val r = Random()
 
-    /** The scheduled operation for changing a bit and shifting downwards  */
+    /** The scheduled operation for changing a character and shifting downwards  */
     private var future: ScheduledFuture<*>? = null
 
     /** The position to draw the sequence at on the screen  */
     internal var x: Float = 0.toFloat()
     internal var y: Float = 0.toFloat()
 
-    /** True when the BitSequence should be paused  */
+    /** True when the CharacterSequence should be paused  */
     private var pause = false
 
     /** Describes the style of the sequence  */
@@ -56,18 +56,18 @@ class BitSequence(x: Int) {
     private var curChar = 0
 
     /**
-     * A runnable that changes the bit, moves the sequence down, and reschedules
+     * A runnable that changes the character, moves the sequence down, and reschedules
      * its execution
      */
-    private val changeBitRunnable = Runnable {
-        changeBit()
+    private val changeCharacterRunnable = Runnable {
+        changeCharacter()
         y += style.fallingSpeed.toFloat()
         if (y > height) {
             reset()
         }
     }
 
-    private val nextBit: String
+    private val nextCharacter: String
         get() {
             val s = Character.toString(charSet!![curChar])
             curChar = (curChar + 1) % charSet!!.length
@@ -111,14 +111,14 @@ class BitSequence(x: Int) {
         }
 
         companion object {
-            /** The default speed at which bits should be changed  */
+            /** The default speed at which characters should be changed  */
             private const val DEFAULT_CHANGE_BIT_SPEED = 100
 
-            /** The maximum alpha a bit can have  */
+            /** The maximum alpha a character can have  */
             private const val MAX_ALPHA = 240
 
-            var changeBitSpeed: Int = 0
-            var numBits: Int = 0
+            var changeCharacterSpeed: Int = 0
+            var numCharacters: Int = 0
             private var color: Int = 0
             var defaultTextSize: Int = 0
             var defaultFallingSpeed: Int = 0
@@ -163,29 +163,29 @@ class BitSequence(x: Int) {
 
                 val preferences = PreferenceUtility(context)
 
-                numBits = if (isRandom) {
+                numCharacters = if (isRandom) {
                     preferences.getInt(KEY_NUM_BITS,
-                            R.integer.default_num_bits)
+                            R.integer.default_num_characters)
                 } else {
                     charSet!!.length
                 }
                 color = preferences
-                        .getInt(KEY_BIT_COLOR, R.color.default_bit_color)
+                        .getInt(KEY_BIT_COLOR, R.color.default_character_color)
                 defaultTextSize = preferences.getInt(KEY_TEXT_SIZE,
                         R.integer.default_text_size)
 
-                val changeBitSpeedMultiplier = 100 / preferences.getDouble(
-                        KEY_CHANGE_BIT_SPEED, R.integer.default_change_bit_speed)
+                val changeCharacterSpeedMultiplier = 100 / preferences.getDouble(
+                        KEY_CHANGE_BIT_SPEED, R.integer.default_change_character_speed)
                 val fallingSpeedMultiplier = preferences.getDouble(
                         KEY_FALLING_SPEED, R.integer.default_falling_speed) / 100
 
-                changeBitSpeed = (DEFAULT_CHANGE_BIT_SPEED * changeBitSpeedMultiplier).toInt()
+                changeCharacterSpeed = (DEFAULT_CHANGE_BIT_SPEED * changeCharacterSpeedMultiplier).toInt()
                 defaultFallingSpeed = (defaultTextSize * fallingSpeedMultiplier).toInt()
 
                 depthEnabled = preferences.getBoolean(KEY_ENABLE_DEPTH, true)
 
-                alphaIncrement = MAX_ALPHA / numBits
-                initialY = -1 * defaultTextSize * numBits
+                alphaIncrement = MAX_ALPHA / numCharacters
+                initialY = -1 * defaultTextSize * numCharacters
             }
         }
     }
@@ -221,12 +221,12 @@ class BitSequence(x: Int) {
 
     init {
         curChar = 0
-        for (i in 0 until Style.numBits) {
+        for (i in 0 until Style.numCharacters) {
             if (isRandom) {
-                bits.add(getRandomBit(r))
+                characters.add(getRandomCharacter(r))
             } else {
-                // TODO: Disable numBits in settings if custom is selected
-                bits.addFirst(nextBit)
+                // TODO: Disable numCharacters in settings if custom is selected
+                characters.addFirst(nextCharacter)
             }
         }
         this.x = x.toFloat()
@@ -234,7 +234,7 @@ class BitSequence(x: Int) {
     }
 
     /**
-     * Pauses the BitSequence by cancelling the ScheduledFuture
+     * Pauses the CharacterSequence by cancelling the ScheduledFuture
      */
     fun pause() {
         if (!pause) {
@@ -250,8 +250,8 @@ class BitSequence(x: Int) {
     }
 
     /**
-     * Unpauses the BitSequence by scheduling BitSequences on the screen to
-     * immediately start, and scheduling BitSequences off the screen to start
+     * Unpauses the CharacterSequence by scheduling CharacterSequences on the screen to
+     * immediately start, and scheduling CharacterSequences off the screen to start
      * after some delay
      */
     fun unpause() {
@@ -266,7 +266,7 @@ class BitSequence(x: Int) {
     }
 
     /**
-     * Schedules the changeBitRunnable with the specified delay, cancelling the
+     * Schedules the changeCharacterRunnable with the specified delay, cancelling the
      * previous scheduled future
      *
      * @param delay
@@ -275,45 +275,45 @@ class BitSequence(x: Int) {
     private fun scheduleThread(delay: Int = r.nextInt(6000)) {
         if (future != null)
             future!!.cancel(true)
-        future = scheduler.scheduleAtFixedRate(changeBitRunnable, delay.toLong(),
-                Style.changeBitSpeed.toLong(), TimeUnit.MILLISECONDS)
+        future = scheduler.scheduleAtFixedRate(changeCharacterRunnable, delay.toLong(),
+                Style.changeCharacterSpeed.toLong(), TimeUnit.MILLISECONDS)
     }
 
-    /** Shifts the bits back by one and adds a new bit to the end  */
+    /** Shifts the characters back by one and adds a new character to the end  */
     @Synchronized
-    private fun changeBit() {
+    private fun changeCharacter() {
         if (isRandom) {
-            bits.removeFirst()
-            bits.addLast(getRandomBit(r))
+            characters.removeFirst()
+            characters.addLast(getRandomCharacter(r))
         }
     }
 
     /**
-     * Gets a new random bit
+     * Gets a new random character
      *
      * @param r
      * the [Random] object to use
-     * @return A new random bit as a [String]
+     * @return A new random character as a [String]
      */
-    private fun getRandomBit(r: Random): String {
+    private fun getRandomCharacter(r: Random): String {
         return symbols!![r.nextInt(symbols!!.size)]
     }
 
     /**
-     * Draws this BitSequence on the screen
+     * Draws this CharacterSequence on the screen
      *
      * @param canvas
-     * the [Canvas] on which to draw the BitSequence
+     * the [Canvas] on which to draw the CharacterSequence
      */
     @Synchronized
     fun draw(canvas: Canvas) {
         // TODO Can the get and set alphas be optimized?
         val paint = style.paint
-        var bitY = y
+        var characterY = y
         paint.alpha = Style.alphaIncrement
-        for (i in bits.indices) {
-            canvas.drawText(bits.get(i), x, bitY, paint)
-            bitY += style.textSize.toFloat()
+        for (i in characters.indices) {
+            canvas.drawText(characters.get(i), x, characterY, paint)
+            characterY += style.textSize.toFloat()
             paint.alpha = paint.alpha + Style.alphaIncrement
         }
     }
@@ -343,7 +343,7 @@ class BitSequence(x: Int) {
         private var isRandom = true
 
         /**
-         * Configures any BitSequences parameters requiring the application context
+         * Configures any CharacterSequences parameters requiring the application context
          *
          * @param context
          * the application context
@@ -353,7 +353,7 @@ class BitSequence(x: Int) {
         }
 
         /**
-         * Configures the BitSequence based on the display
+         * Configures the CharacterSequence based on the display
          *
          * @param width
          * the width of the screen
@@ -365,9 +365,9 @@ class BitSequence(x: Int) {
         }
 
         /**
-         * Gets the width the BitSequence would be on the screen
+         * Gets the width the CharacterSequence would be on the screen
          *
-         * @return the width of the BitSequence
+         * @return the width of the CharacterSequence
          */
         val width: Float
             get() {

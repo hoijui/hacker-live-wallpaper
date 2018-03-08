@@ -55,7 +55,7 @@ import java.util.Stack;
  * deques have no capacity restrictions; they grow as necessary to support
  * usage.  They are not thread-safe; in the absence of external
  * synchronization, they do not support concurrent access by multiple threads.
- * Null elements are prohibited.  This class is likely to be faster than
+ * Null elements are prohicharactered.  This class is likely to be faster than
  * {@link Stack} when used as a stack, and faster than {@link LinkedList}
  * when used as a queue.
  *
@@ -72,7 +72,7 @@ import java.util.Stack;
  * method, the iterator will generally throw a {@link
  * ConcurrentModificationException}.  Thus, in the face of concurrent
  * modification, the iterator fails quickly and cleanly, rather than risking
- * arbitrary, non-deterministic behavior at an undetermined time in the
+ * archaracterrary, non-deterministic behavior at an undetermined time in the
  * future.
  *
  * <p>Note that the fail-fast behavior of an iterator cannot be guaranteed
@@ -114,7 +114,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     /**
      * The index of the element at the head of the deque (which is the
      * element that would be removed by remove() or pop()); or an
-     * arbitrary number equal to tail if the deque is empty.
+     * archaracterrary number equal to tail if the deque is empty.
      */
     private transient int head;
 

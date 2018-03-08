@@ -10,9 +10,9 @@
     <com.gulshansingh.hackerlivewallpaper.settings.NumberSeekBarPreference
         custom:mymax="15"
         custom:mymin="1"
-        android:defaultValue="@integer/default_num_bits"
-        android:key="num_bits"
-        android:title="Number of Bits" />
+        android:defaultValue="@integer/default_num_characters"
+        android:key="num_characters"
+        android:title="Number of Characters" />
 
     <com.gulshansingh.hackerlivewallpaper.settings.PercentSeekBarPreference
         custom:mymax="200"
@@ -23,16 +23,16 @@
     <com.gulshansingh.hackerlivewallpaper.settings.PercentSeekBarPreference
         custom:mymax="200"
         custom:mymin="50"
-        android:defaultValue="@integer/default_change_bit_speed"
-        android:key="change_bit_speed"
-        android:title="Bit Change Speed" />
+        android:defaultValue="@integer/default_change_character_speed"
+        android:key="change_character_speed"
+        android:title="Character Change Speed" />
 
     <com.gulshansingh.hackerlivewallpaper.settings.NumberSeekBarPreference
         custom:mymax="50"
         custom:mymin="10"
         android:defaultValue="@integer/default_text_size"
         android:key="text_size"
-        android:title="Bit Text Size" />
+        android:title="Character Text Size" />
 
     <com.gulshansingh.hackerlivewallpaper.settings.CharacterSetPreference
         android:key="character_set_prefs"
@@ -40,10 +40,10 @@
         android:title="Character Set" />
 
     <net.margaritov.preference.colorpicker.ColorPickerPreference
-        android:defaultValue="@color/default_bit_color"
-        android:key="bit_color"
-        android:summary="Choose the bit color"
-        android:title="Bit Color" />
+        android:defaultValue="@color/default_character_color"
+        android:key="character_color"
+        android:summary="Choose the character color"
+        android:title="Character Color" />
 
     <net.margaritov.preference.colorpicker.ColorPickerPreference
         android:defaultValue="@color/default_background_color"
