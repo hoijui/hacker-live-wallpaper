@@ -62,7 +62,7 @@ class BitSequence(x: Int) {
     private val changeBitRunnable = Runnable {
         changeBit()
         y += style.fallingSpeed.toFloat()
-        if (y > HEIGHT) {
+        if (y > height) {
             reset()
         }
     }
@@ -211,12 +211,10 @@ class BitSequence(x: Int) {
             style.fallingSpeed = (Style.defaultFallingSpeed * Math.pow(
                     factor, 4.0)).toInt()
 
-            if (factor > .93) {
-                style.maskFilter = regularFilter
-            } else if (factor in .87 .. .93) {
-                style.maskFilter = slightBlurFilter
-            } else {
-                style.maskFilter = blurFilter
+            when {
+                factor > .93 -> style.maskFilter = regularFilter
+                factor in .87 .. .93 -> style.maskFilter = slightBlurFilter
+                else -> style.maskFilter = blurFilter
             }
         }
     }
@@ -258,7 +256,7 @@ class BitSequence(x: Int) {
      */
     fun unpause() {
         if (pause) {
-            if (y <= Style.initialY + style.textSize || y > HEIGHT) {
+            if (y <= Style.initialY + style.textSize || y > height) {
                 scheduleThread()
             } else {
                 scheduleThread(0)
@@ -272,7 +270,7 @@ class BitSequence(x: Int) {
      * previous scheduled future
      *
      * @param delay
-     * the delay in milliseconds
+     * the delay in milliseconds, less than 6000 milliseconds by default
      */
     private fun scheduleThread(delay: Int = r.nextInt(6000)) {
         if (future != null)
@@ -334,7 +332,7 @@ class BitSequence(x: Int) {
         private val regularFilter: BlurMaskFilter? = null
 
         /** The height of the screen  */
-        private var HEIGHT: Int = 0
+        private var height: Int = 0
 
         private val scheduler = Executors
                 .newSingleThreadScheduledExecutor()
@@ -363,7 +361,7 @@ class BitSequence(x: Int) {
          * the height of the screen
          */
         fun setScreenDim(width: Int, height: Int) {
-            HEIGHT = height
+            this.height = height
         }
 
         /**
@@ -379,7 +377,3 @@ class BitSequence(x: Int) {
             }
     }
 }
-/**
- * Schedules the changeBitRunnable with a random delay less than 6000
- * milliseconds, cancelling the previous scheduled future
- */
